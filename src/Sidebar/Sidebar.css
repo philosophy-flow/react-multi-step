@@ -1,0 +1,30 @@
+.Sidebar {
+  border-right: 1px solid black;
+  position: fixed;
+  height: 100%;
+  width: 150px;
+  text-align: center;
+}
+
+.Sidebar h2 {
+  margin: 1rem 0;
+}
+
+.form-step {
+  padding: 20px;
+
+  position: relative;
+}
+
+.status-circle {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid black;
+
+  position: absolute;
+  right: -10px;
+  top: 18px;
+  background-color: #fff;
+}
