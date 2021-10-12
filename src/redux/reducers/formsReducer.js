@@ -7,13 +7,13 @@ const initialState = {
 
 export function createFormsReducer(formName = "") {
   return function (state = initialState, action) {
-    const { name } = action;
+    const name = action.name;
     if (name !== formName) return state;
 
     switch (action.type) {
       case SUBMIT_FORM:
         return {
-          data: action.data,
+          data: action.formData,
           complete: true,
         };
       default:

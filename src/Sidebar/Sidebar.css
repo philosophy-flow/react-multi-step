@@ -26,10 +26,16 @@
 
   position: absolute;
   right: -10px;
-  top: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  /* top: 20px; */
   background-color: #fff;
 }
 
 .status-circle.active {
   border: 1px solid green;
+}
+
+.status-circle.step-complete {
+  background-color: green;
 }

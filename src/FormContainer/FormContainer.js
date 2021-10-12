@@ -1,6 +1,6 @@
 import "./FormContainer.css";
 import React from "react";
-import FormRouter from "../Forms/FormRouter";
+import FormRouter from "../FormRouter";
 
 export default function FormContainer() {
   return (

@@ -6,26 +6,31 @@ import { useSelector } from "react-redux";
 
 export default function Sidebar() {
   const activeStep = useSelector((state) => state.activeStep);
+  const step1Complete = useSelector((state) => state.subForm1.complete);
+  const step2Complete = useSelector((state) => state.subForm2.complete);
 
   return (
     <div className="Sidebar">
-      <h2>Title</h2>
+      <h2>Product Survey</h2>
       <nav>
         <ul>
           <li className="form-step">
-            <span>Step #1 </span>
+            <span>Basic Details</span>
             <span
-              className={`status-circle ${activeStep === 1 && "active"}`}
+              className={`status-circle ${activeStep === 1 && "active"}
+              ${step1Complete && "step-complete"}`}
             ></span>
           </li>
           <li className="form-step">
-            <span>Step #2 </span>
+            <span>Address Details </span>
             <span
-              className={`status-circle ${activeStep === 2 && "active"}`}
+              className={`status-circle ${activeStep === 2 && "active"}  ${
+                step2Complete && "step-complete"
+              }`}
             ></span>
           </li>
           <li className="form-step">
-            <span>Step #3 </span>
+            <span>Product Selection </span>
             <span
               className={`status-circle ${activeStep === 3 && "active"}`}
             ></span>
