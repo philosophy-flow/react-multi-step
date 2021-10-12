@@ -29,3 +29,7 @@
   top: 20px;
   background-color: #fff;
 }
+
+.status-circle.active {
+  border: 1px solid green;
+}
