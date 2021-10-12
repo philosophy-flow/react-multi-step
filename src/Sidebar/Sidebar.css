@@ -2,12 +2,13 @@
   border-right: 1px solid black;
   position: fixed;
   height: 100%;
-  width: 150px;
+  width: var(--sidebar-width);
   text-align: center;
 }
 
 .Sidebar h2 {
-  margin: 1rem 0;
+  padding: 1rem 0;
+  border-bottom: 1px solid black;
 }
 
 .form-step {
@@ -25,6 +26,6 @@
 
   position: absolute;
   right: -10px;
-  top: 18px;
+  top: 20px;
   background-color: #fff;
 }

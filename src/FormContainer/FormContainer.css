@@ -1,0 +1,13 @@
+.FormContainer {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+}
+
+.buffer {
+  border-bottom: 1px solid black;
+  height: 62px;
+}
+
+.content {
+  padding: 2rem;
+}
