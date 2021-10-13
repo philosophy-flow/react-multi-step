@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useFormik } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -48,89 +48,69 @@ export default function Form2() {
     history.push("3");
   };
 
-  const formik = useFormik({
-    initialValues: {
-      address1: "",
-      address2: "",
-      city: "",
-      zipcode: "",
-    },
-    onSubmit: (values) => {
-      handleSubmit(values);
-    },
-    validate,
-  });
+  // const formik = useFormik({
+  //   initialValues: {
+  //     address1: "",
+  //     address2: "",
+  //     city: "",
+  //     zipcode: "",
+  //   },
+  //   onSubmit: (values) => {
+  //     handleSubmit(values);
+  //   },
+  //   validate,
+  // });
 
   return (
-    <div className="Form">
-      <h3>Address Details</h3>
-      <form onSubmit={formik.handleSubmit}>
+    <Formik
+      initialValues={{
+        address1: "",
+        address2: "",
+        city: "",
+        zipcode: "",
+      }}
+      onSubmit={(values) => handleSubmit(values)}
+      validate={validate}
+    >
+      <Form className="Form">
+        <h3>Address Details</h3>
         <div className="input-container">
           <label htmlFor="address1">Address Line 1:</label>
-          <input
-            id="address1"
-            name="address1"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.address1}
-            placeholder="Primary address"
-          />
-          {formik.touched.address1 && formik.errors.address1 ? (
-            <div className="form-error">{formik.errors.address1}</div>
-          ) : null}
+          <Field id="address1" name="address1" />
+          <ErrorMessage name="address1">
+            {(msg) => <span className="form-error">{msg}</span>}
+          </ErrorMessage>
         </div>
 
         <div className="input-container">
           <label htmlFor="address2">Address Line 2:</label>
-          <input
-            id="address2"
-            name="address2"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.address2}
-            placeholder="Apartment, unit, etc."
-          />
-          {formik.touched.address2 && formik.errors.address2 ? (
-            <div className="form-error">{formik.errors.address2}</div>
-          ) : null}
+          <Field id="address2" name="address2" />
         </div>
 
         <div className="input-container">
           <label htmlFor="city">City:</label>
-          <input
-            id="city"
-            name="city"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.city}
-          />
-          {formik.touched.city && formik.errors.city ? (
-            <div className="form-error">{formik.errors.city}</div>
-          ) : null}
+          <Field id="city" name="city" />
+          <ErrorMessage name="city">
+            {(msg) => <span className="form-error">{msg}</span>}
+          </ErrorMessage>
         </div>
 
         <div className="input-container">
-          <label htmlFor="zipcode">Zipcode:</label>
-          <input
-            id="zipcode"
-            name="zipcode"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.zipcode}
-          />
-          {formik.touched.zipcode && formik.errors.zipcode ? (
-            <div className="form-error">{formik.errors.zipcode}</div>
-          ) : null}
+          <label htmlFor="zipcode">Zip Code:</label>
+          <Field id="zipcode" name="zipcode" />
+          <ErrorMessage name="zipcode">
+            {(msg) => <span className="form-error">{msg}</span>}
+          </ErrorMessage>
         </div>
 
         <button type="submit" className="form-btn">
           Next
         </button>
-      </form>
-      <div className="refresh-warning">
-        Do <span>not</span> refresh until all steps are completed, or progress
-        will be lost!
-      </div>
-    </div>
+        <div className="refresh-warning">
+          Do <span>not</span> refresh until all steps are completed, or progress
+          will be lost!
+        </div>
+      </Form>
+    </Formik>
   );
 }

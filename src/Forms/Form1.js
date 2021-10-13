@@ -1,6 +1,6 @@
 import "./Form.css";
 import React, { useEffect } from "react";
-import { useFormik } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -42,70 +42,49 @@ export default function Form1() {
     history.push("2");
   };
 
-  const handleBackspace = () => {
+  // prevent user from moving backwards in form
+  useEffect(() => {
     if (stepComplete) {
       history.push("2");
     }
-  };
-
-  useEffect(handleBackspace, [history, stepComplete]);
-
-  const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-    },
-    onSubmit: (values) => {
-      handleSubmit(values);
-    },
-    validate,
-  });
+  }, [history, stepComplete]);
 
   return (
-    <div className="Form">
-      <h3>Basic Details</h3>
-      <form onSubmit={formik.handleSubmit}>
+    <Formik
+      initialValues={{
+        firstName: "",
+        lastName: "",
+        email: "",
+      }}
+      onSubmit={(values) => {
+        handleSubmit(values);
+      }}
+      validate={validate}
+    >
+      <Form className="Form">
+        <h3>Basic Details</h3>
         <div className="input-container">
           <label htmlFor="firstName">First Name:</label>
-          <input
-            id="firstName"
-            name="firstName"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.firstName}
-          />
-          {formik.touched.firstName && formik.errors.firstName ? (
-            <div className="form-error">{formik.errors.firstName}</div>
-          ) : null}
+          <Field id="firstName" name="firstName" />
+          <ErrorMessage name="firstName">
+            {(msg) => <span className="form-error">{msg}</span>}
+          </ErrorMessage>
         </div>
 
         <div className="input-container">
           <label htmlFor="lastName">Last Name:</label>
-          <input
-            id="lastName"
-            name="lastName"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.lastName}
-          />
-          {formik.touched.lastName && formik.errors.lastName ? (
-            <div className="form-error">{formik.errors.lastName}</div>
-          ) : null}
+          <Field id="lastName" name="lastName" />
+          <ErrorMessage name="lastName">
+            {(msg) => <span className="form-error">{msg}</span>}
+          </ErrorMessage>
         </div>
 
         <div className="input-container">
           <label htmlFor="email">Email:</label>
-          <input
-            id="email"
-            name="email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-          />
-          {formik.touched.email && formik.errors.email ? (
-            <div className="form-error">{formik.errors.email}</div>
-          ) : null}
+          <Field id="email" name="email" />
+          <ErrorMessage name="email">
+            {(msg) => <span className="form-error">{msg}</span>}
+          </ErrorMessage>
         </div>
 
         <button type="submit" className="form-btn">
@@ -115,7 +94,7 @@ export default function Form1() {
           Do <span>not</span> refresh until all steps are completed, or progress
           will be lost!
         </div>
-      </form>
-    </div>
+      </Form>
+    </Formik>
   );
 }
