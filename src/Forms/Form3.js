@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -11,10 +11,19 @@ export default function Form3() {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const stepComplete = useSelector((state) => state.subForm3.complete);
+
   const activeStep = useSelector((state) => state.activeStep);
   if (activeStep === 1) {
     history.push("1");
   }
+
+  const handleBackspace = () => {
+    if (stepComplete) {
+      history.push("4");
+    }
+  };
+  useEffect(handleBackspace, [history, stepComplete]);
 
   const products = useSelector((state) => state.products);
   const productInputs = products.map((product) => (

@@ -1,7 +1,7 @@
 import "./Form.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { incrementActiveStep } from "../redux/actions/stepActions";
@@ -34,11 +34,21 @@ export default function Form1() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const stepComplete = useSelector((state) => state.subForm1.complete);
+
   const handleSubmit = (values) => {
     dispatch(incrementActiveStep());
     dispatch(submitForm("form1", values));
     history.push("2");
   };
+
+  const handleBackspace = () => {
+    if (stepComplete) {
+      history.push("2");
+    }
+  };
+
+  useEffect(handleBackspace, [history, stepComplete]);
 
   const formik = useFormik({
     initialValues: {

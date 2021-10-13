@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -28,10 +28,19 @@ export default function Form2() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const stepComplete = useSelector((state) => state.subForm2.complete);
+
   const activeStep = useSelector((state) => state.activeStep);
   if (activeStep === 1) {
     history.push("1");
   }
+
+  const handleBackspace = () => {
+    if (stepComplete) {
+      history.push("3");
+    }
+  };
+  useEffect(handleBackspace, [history, stepComplete]);
 
   const handleSubmit = (values) => {
     dispatch(incrementActiveStep());
