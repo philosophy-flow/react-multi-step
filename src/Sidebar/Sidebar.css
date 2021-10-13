@@ -11,6 +11,10 @@
   border-bottom: 1px solid black;
 }
 
+.Sidebar ul {
+  list-style-type: none;
+}
+
 .form-step {
   padding: 20px;
 

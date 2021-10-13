@@ -1,7 +1,7 @@
 import "./Form.css";
 import React from "react";
 import { useFormik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { incrementActiveStep } from "../redux/actions/stepActions";
@@ -35,7 +35,6 @@ export default function Form1() {
   const history = useHistory();
 
   const handleSubmit = (values) => {
-    console.log(values);
     dispatch(incrementActiveStep());
     dispatch(submitForm("form1", values));
     history.push("2");

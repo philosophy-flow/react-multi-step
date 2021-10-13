@@ -42,3 +42,11 @@ form input[type="radio"] {
 .product-page-info {
   margin-bottom: 1rem;
 }
+
+.review-details p {
+  margin: 1rem 0;
+}
+
+.review-details p span {
+  font-weight: bold;
+}

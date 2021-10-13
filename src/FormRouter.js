@@ -27,7 +27,7 @@ export default function FormRouter() {
         <Route path="/3">
           <Form3 />
         </Route>
-        <Route path="/review">
+        <Route path="/4">
           <Review />
         </Route>
         <Route>

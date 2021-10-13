@@ -1,40 +1,65 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+
+import { incrementActiveStep } from "../redux/actions/stepActions";
+import { submitForm } from "../redux/actions/formActions";
 
 export default function Form3() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const activeStep = useSelector((state) => state.activeStep);
   if (activeStep === 1) {
     history.push("1");
   }
 
+  const products = useSelector((state) => state.products);
+  const productInputs = products.map((product) => (
+    <div className="input-container" key={product.id}>
+      <label>
+        <Field type="radio" name="product" value={product.title} />
+        {product.title}
+      </label>
+    </div>
+  ));
+
+  const handleSubmit = (values) => {
+    dispatch(incrementActiveStep());
+    dispatch(submitForm("form3", values));
+    history.push("4");
+  };
+
   return (
     <div className="Form">
-      <div>
-        <h3>Product Selection</h3>
-        <p className="product-page-info">Select your favorite product!</p>
-        <form>
-          <div className="input-container">
-            <input type="radio" name="product" value="product1" />
-            <label htmlFor="product1">Product 1</label>
-          </div>
-
-          <div className="input-container">
-            <input type="radio" name="product" value="product2" />
-            <label htmlFor="product1">Product 2</label>
-          </div>
-
-          <div className="input-container">
-            <input type="radio" name="product" value="product3" />
-            <label htmlFor="product1">Product 3</label>
+      <h3>Product Selection</h3>
+      <p className="product-page-info">Select your favorite product!</p>
+      <Formik
+        initialValues={{
+          product: "",
+        }}
+        onSubmit={(values) => {
+          if (values.product) {
+            handleSubmit(values);
+          }
+        }}
+      >
+        <Form>
+          <div role="group" aria-labelledby="my-radio-group">
+            {productInputs}
+            <ErrorMessage name="product" />
           </div>
           <button type="submit" className="form-btn">
             Next
           </button>
-        </form>
-      </div>
+          <div className="refresh-warning">
+            Do <span>not</span> refresh until all steps are completed, or
+            progress will be lost!
+          </div>
+        </Form>
+      </Formik>
     </div>
   );
 }
