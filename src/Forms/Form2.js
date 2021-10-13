@@ -1,7 +1,7 @@
 import "./Form.css";
 import React from "react";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { incrementActiveStep } from "../redux/actions/stepActions";
@@ -28,6 +28,11 @@ const validate = (values) => {
 export default function Form2() {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const activeStep = useSelector((state) => state.activeStep);
+  if (activeStep === 1) {
+    history.push("1");
+  }
 
   const handleSubmit = (values) => {
     console.log("submitted");
@@ -91,7 +96,7 @@ export default function Form2() {
             name="city"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.state}
+            value={formik.values.city}
           />
           {formik.touched.city && formik.errors.city ? (
             <div className="form-error">{formik.errors.city}</div>

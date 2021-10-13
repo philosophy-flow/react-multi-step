@@ -1,6 +1,15 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export default function Form3() {
+  const history = useHistory();
+
+  const activeStep = useSelector((state) => state.activeStep);
+  if (activeStep === 1) {
+    history.push("1");
+  }
+
   return (
     <div className="Form">
       <div>
