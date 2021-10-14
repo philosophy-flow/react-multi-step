@@ -19,31 +19,33 @@ const store = mockStore(initialState);
 // needed because useHistory is used in submit function
 const history = createMemoryHistory();
 
-test("rendering and submitting form", async () => {
-  const handleSubmit = jest.fn();
+// test("rendering and submitting form", async () => {
+//   const handleSubmit = jest.fn();
 
-  render(
-    <Provider store={store}>
-      <Router history={history}>
-        <Form1 onSubmit={handleSubmit} />
-      </Router>
-    </Provider>
-  );
+//   render(
+//     <Provider store={store}>
+//       <Router history={history}>
+//         <Form1 onSubmit={handleSubmit} />
+//       </Router>
+//     </Provider>
+//   );
 
-  userEvent.type(screen.getByLabelText(/First Name:/i), "John");
-  userEvent.type(screen.getByLabelText(/Last Name:/i), "Doe");
-  userEvent.type(screen.getByLabelText(/Email:/i), "test@test.com");
+//   // user enters inputs into each field
+//   userEvent.type(screen.getByLabelText(/First Name:/i), "John");
+//   userEvent.type(screen.getByLabelText(/Last Name:/i), "Doe");
+//   userEvent.type(screen.getByLabelText(/Email:/i), "test@test.com");
 
-  userEvent.click(screen.getByRole("button"));
+//   // user clicks next button (type=submit)
+//   userEvent.click(screen.getByRole("button"));
 
-  await waitFor(() =>
-    expect(handleSubmit).toHaveBeenCalledWith({
-      email: "test@test.com",
-      firstName: "John",
-      lastName: "Doe",
-    })
-  );
-});
+//   await waitFor(() =>
+//     expect(handleSubmit).toHaveBeenCalledWith({
+//       email: "test@test.com",
+//       firstName: "John",
+//       lastName: "Doe",
+//     })
+//   );
+// });
 
 test("show first name field validation on blur", async () => {
   const { getByLabelText, getByText } = render(

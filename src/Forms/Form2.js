@@ -56,7 +56,7 @@ export default function Form2() {
         city: "",
         zipcode: "",
       }}
-      onSubmit={(values) => handleSubmit(values)}
+      onSubmit={handleSubmit}
       validate={validate}
     >
       <Form className="Form">
