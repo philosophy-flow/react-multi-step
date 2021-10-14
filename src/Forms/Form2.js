@@ -28,38 +28,25 @@ export default function Form2() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const stepComplete = useSelector((state) => state.subForm2.complete);
-
+  // sends user back to first form on page refresh
   const activeStep = useSelector((state) => state.activeStep);
   if (activeStep === 1) {
     history.push("1");
   }
 
-  const handleBackspace = () => {
+  // prevent user from moving back in form
+  const stepComplete = useSelector((state) => state.subForm2.complete);
+  useEffect(() => {
     if (stepComplete) {
       history.push("3");
     }
-  };
-  useEffect(handleBackspace, [history, stepComplete]);
+  }, [history, stepComplete]);
 
   const handleSubmit = (values) => {
     dispatch(incrementActiveStep());
     dispatch(submitForm("form2", values));
     history.push("3");
   };
-
-  // const formik = useFormik({
-  //   initialValues: {
-  //     address1: "",
-  //     address2: "",
-  //     city: "",
-  //     zipcode: "",
-  //   },
-  //   onSubmit: (values) => {
-  //     handleSubmit(values);
-  //   },
-  //   validate,
-  // });
 
   return (
     <Formik

@@ -11,13 +11,13 @@ export default function Form3() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const stepComplete = useSelector((state) => state.subForm3.complete);
-
   const activeStep = useSelector((state) => state.activeStep);
   if (activeStep === 1) {
     history.push("1");
   }
 
+  // prevents user from moving back in form
+  const stepComplete = useSelector((state) => state.subForm3.complete);
   const handleBackspace = () => {
     if (stepComplete) {
       history.push("4");
