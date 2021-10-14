@@ -34,20 +34,19 @@ export default function Form1() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  // prevent user from moving backwards in form
   const stepComplete = useSelector((state) => state.subForm1.complete);
+  useEffect(() => {
+    if (stepComplete) {
+      history.push("2");
+    }
+  }, [history, stepComplete]);
 
   const handleSubmit = (values) => {
     dispatch(incrementActiveStep());
     dispatch(submitForm("form1", values));
     history.push("2");
   };
-
-  // prevent user from moving backwards in form
-  useEffect(() => {
-    if (stepComplete) {
-      history.push("2");
-    }
-  }, [history, stepComplete]);
 
   return (
     <Formik
@@ -56,10 +55,8 @@ export default function Form1() {
         lastName: "",
         email: "",
       }}
-      onSubmit={(values) => {
-        handleSubmit(values);
-      }}
       validate={validate}
+      onSubmit={handleSubmit}
     >
       <Form className="Form">
         <h3>Basic Details</h3>
