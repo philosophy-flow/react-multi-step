@@ -46,6 +46,7 @@ export default function Form1() {
     dispatch(incrementActiveStep());
     dispatch(submitForm("form1", values));
     history.push("2");
+    console.log(values);
   };
 
   return (
