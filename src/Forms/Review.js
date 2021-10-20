@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 
@@ -8,16 +8,19 @@ export default function Review() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const activeStep = useSelector((state) => state.activeStep);
-  if (activeStep === 1) {
-    history.push("1");
-  }
+  // keep user on active form step
+  const activeStep = useSelector((state) => state.activeStep).toString();
+  useEffect(() => {
+    history.push(activeStep);
+  });
 
+  // bring in data from sub forms
   const form1Data = useSelector((state) => state.subForm1.data);
   const form2Data = useSelector((state) => state.subForm2.data);
   const form3Data = useSelector((state) => state.subForm3.data);
 
-  const handleFinalSubmission = () => {
+  const handleFinalSubmission = (e) => {
+    e.preventDefault();
     const formData = {
       ...form1Data,
       ...form2Data,
@@ -32,7 +35,7 @@ export default function Review() {
   };
 
   return (
-    <div className="Form">
+    <form className="Form" onSubmit={handleFinalSubmission}>
       <h3>Review</h3>
       <p>You're almost there! Please review your details below.</p>
 
@@ -64,9 +67,9 @@ export default function Review() {
           Product Selection: <span>{form3Data.product}</span>
         </p>
       </div>
-      <button className="form-btn" onClick={handleFinalSubmission}>
+      <button className="form-btn" type="submit">
         Submit Form
       </button>
-    </div>
+    </form>
   );
 }
