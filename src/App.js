@@ -8,6 +8,7 @@ import FormContainer from "./FormContainer/FormContainer";
 function App() {
   const dispatch = useDispatch();
 
+  // makes API call to fetch products via redux saga
   useEffect(() => {
     dispatch(loadProducts());
   }, [dispatch]);

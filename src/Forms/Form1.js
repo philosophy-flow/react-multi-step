@@ -1,9 +1,14 @@
 import "./Form.css";
+
 import React, { useEffect } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+// components
+import FormComponent from "../components/FormComponent";
+import Input from "../components/TextInput";
+
+// redux actions
 import { incrementActiveStep } from "../redux/actions/stepActions";
 import { submitForm } from "../redux/actions/formActions";
 
@@ -30,18 +35,23 @@ const validate = (values) => {
   return errors;
 };
 
+const initialValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+};
+
 export default function Form1() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // prevent user from moving backwards in form
-  const stepComplete = useSelector((state) => state.subForm1.complete);
+  // keep user on active form step
+  const activeStep = useSelector((state) => state.activeStep).toString();
   useEffect(() => {
-    if (stepComplete) {
-      history.push("2");
-    }
-  }, [history, stepComplete]);
+    history.push(activeStep);
+  }, [activeStep, history]);
 
+  // update redux store (active step + form details), move to next form
   const handleSubmit = (values) => {
     dispatch(incrementActiveStep());
     dispatch(submitForm("form1", values));
@@ -49,49 +59,15 @@ export default function Form1() {
   };
 
   return (
-    <Formik
-      initialValues={{
-        firstName: "",
-        lastName: "",
-        email: "",
-      }}
+    <FormComponent
+      title="Basic Details"
+      initialValues={initialValues}
+      handleSubmit={handleSubmit}
       validate={validate}
-      onSubmit={handleSubmit}
     >
-      <Form className="Form">
-        <h3>Basic Details</h3>
-        <div className="input-container">
-          <label htmlFor="firstName">First Name:</label>
-          <Field id="firstName" name="firstName" />
-          <ErrorMessage name="firstName">
-            {(msg) => <span className="form-error">{msg}</span>}
-          </ErrorMessage>
-        </div>
-
-        <div className="input-container">
-          <label htmlFor="lastName">Last Name:</label>
-          <Field id="lastName" name="lastName" />
-          <ErrorMessage name="lastName">
-            {(msg) => <span className="form-error">{msg}</span>}
-          </ErrorMessage>
-        </div>
-
-        <div className="input-container">
-          <label htmlFor="email">Email:</label>
-          <Field id="email" name="email" />
-          <ErrorMessage name="email">
-            {(msg) => <span className="form-error">{msg}</span>}
-          </ErrorMessage>
-        </div>
-
-        <button type="submit" className="form-btn">
-          Next
-        </button>
-        <div className="refresh-warning">
-          Do <span>not</span> refresh until all steps are completed, or progress
-          will be lost!
-        </div>
-      </Form>
-    </Formik>
+      <Input label="First Name" name="firstName" />
+      <Input label="Last Name" name="lastName" />
+      <Input label="Email" name="email" />
+    </FormComponent>
   );
 }
