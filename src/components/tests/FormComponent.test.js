@@ -22,7 +22,7 @@ test("form component submission", async () => {
 
   render(
     <FormComponent
-      onSubmit={handleSubmit}
+      handleSubmit={handleSubmit}
       initialValues={initialValues}
       validate={validate}
     >
@@ -34,7 +34,7 @@ test("form component submission", async () => {
 
   userEvent.click(screen.getByRole("button"));
 
-  screen.debug();
+  // screen.debug();
 
   await waitFor(() => expect(handleSubmit).toHaveBeenCalled());
 });
