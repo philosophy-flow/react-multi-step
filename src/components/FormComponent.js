@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 
 function FormComponent(props) {
   const {
-    title,
+    title = "",
     initialValues,
     handleSubmit,
     validate = null,
