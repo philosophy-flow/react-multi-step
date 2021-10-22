@@ -7,13 +7,13 @@ import TextInput from "../TextInput";
 
 test("form component submission", async () => {
   const initialValues = {
-    arbitrayVal: "",
+    arbitraryVal: "",
   };
 
   const validate = (values) => {
     const errors = {};
-    if (!values.arbitrayVal) {
-      errors.arbitrayVal = "Required";
+    if (!values.arbitraryVal) {
+      errors.arbitraryVal = "Required";
     }
     return errors;
   };
@@ -34,7 +34,7 @@ test("form component submission", async () => {
 
   userEvent.click(screen.getByRole("button"));
 
-  // screen.debug();
-
-  await waitFor(() => expect(handleSubmit).toHaveBeenCalled());
+  await waitFor(() => {
+    expect(handleSubmit).toHaveBeenCalled();
+  });
 });
