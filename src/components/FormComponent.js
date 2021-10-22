@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 function FormComponent(props) {
   const {
     title = "",
-    initialValues,
+    initialValues = {},
     handleSubmit,
     validate = null,
     children,
