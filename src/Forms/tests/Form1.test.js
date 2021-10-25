@@ -21,7 +21,7 @@ const store = mockStore(initialState);
 // needed because useHistory is used in submit function
 const history = createMemoryHistory();
 
-describe("form 1 validation", () => {
+describe("Form1", () => {
   beforeEach(() => {
     render(
       <Provider store={store}>
@@ -77,5 +77,19 @@ describe("form 1 validation", () => {
     });
 
     expect(emailError).not.toBeNull();
+  });
+
+  test("form 2 appears after successful submission", async () => {
+    history.push = jest.fn();
+
+    userEvent.type(screen.getByLabelText(/first name/i), "John");
+    userEvent.type(screen.getByLabelText(/last name/i), "Dee");
+    userEvent.type(screen.getByLabelText(/email/i), "john.dee@someemail.com");
+
+    userEvent.click(screen.getByText(/next/i));
+
+    await waitFor(() => {
+      expect(history.push).toHaveBeenCalledWith("2");
+    });
   });
 });

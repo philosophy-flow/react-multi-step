@@ -21,7 +21,7 @@ const store = mockStore(initialState);
 // needed because useHistory is used in submit function
 const history = createMemoryHistory();
 
-describe("form 2 validation", () => {
+describe("form 2", () => {
   beforeEach(() => {
     render(
       <Provider store={store}>
@@ -77,5 +77,19 @@ describe("form 2 validation", () => {
     });
 
     expect(zipcodeError).not.toBeNull();
+  });
+
+  test("next subform appears after successful submission", async () => {
+    history.push = jest.fn();
+
+    userEvent.type(screen.getByLabelText(/address line 1/i), "123 Main St.");
+    userEvent.type(screen.getByLabelText(/city/i), "Springfield");
+    userEvent.type(screen.getByLabelText(/zip code/i), "12345");
+
+    userEvent.click(screen.getByText(/next/i));
+
+    await waitFor(() => {
+      expect(history.push).toHaveBeenCalledWith("3");
+    });
   });
 });
