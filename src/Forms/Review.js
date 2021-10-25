@@ -23,7 +23,6 @@ export default function Review() {
   // moves user to previous form step
   const handleBack = () => {
     dispatch(decrementActiveStep());
-    console.log(activeStep);
   };
 
   const handleFinalSubmission = (e) => {

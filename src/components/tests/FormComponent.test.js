@@ -32,7 +32,7 @@ test("form component submission", async () => {
 
   userEvent.type(screen.getByLabelText(/Arbitrary/i), "Foo");
 
-  userEvent.click(screen.getByRole("button"));
+  userEvent.click(screen.getByText(/next/i));
 
   await waitFor(() => {
     expect(handleSubmit).toHaveBeenCalled();

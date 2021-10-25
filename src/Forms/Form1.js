@@ -3,6 +3,7 @@ import "./Form.css";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import * as Yup from "yup";
 
 // components
 import FormComponent from "../components/FormComponent";
@@ -12,28 +13,15 @@ import Input from "../components/TextInput";
 import { incrementActiveStep } from "../redux/actions/stepActions";
 import { submitForm } from "../redux/actions/formActions";
 
-const validate = (values) => {
-  const errors = {};
-  if (!values.firstName) {
-    errors.firstName = "Required";
-  } else if (values.firstName.length > 15) {
-    errors.firstName = "Must be 15 characters or less";
-  }
-
-  if (!values.lastName) {
-    errors.lastName = "Required";
-  } else if (values.lastName.length > 20) {
-    errors.lastName = "Must be 20 characters or less";
-  }
-
-  if (!values.email) {
-    errors.email = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email address";
-  }
-
-  return errors;
-};
+const validationSchema = Yup.object({
+  firstName: Yup.string()
+    .max(20, "Must be 20 characters or less")
+    .required("Required"),
+  lastName: Yup.string()
+    .max(20, "Must be 20 characters or less")
+    .required("Required"),
+  email: Yup.string().email("Invalid format").required("Required"),
+});
 
 export default function Form1() {
   const dispatch = useDispatch();
@@ -67,7 +55,7 @@ export default function Form1() {
       title="Basic Details"
       initialValues={initialValues}
       handleSubmit={handleSubmit}
-      validate={validate}
+      validationSchema={validationSchema}
       activeStep={activeStep}
     >
       <Input label="First Name" name="firstName" />

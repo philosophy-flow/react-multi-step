@@ -8,14 +8,14 @@ function FormComponent(props) {
     handleBack,
     activeStep,
     handleSubmit,
-    validate = null,
+    validationSchema = null,
     children,
   } = props;
 
   return (
     <Formik
       initialValues={initialValues}
-      validate={validate}
+      validationSchema={validationSchema}
       handleBack={handleBack}
       onSubmit={handleSubmit}
     >

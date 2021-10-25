@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 // components
 import FormComponent from "../components/FormComponent";
@@ -14,6 +15,10 @@ import {
   decrementActiveStep,
 } from "../redux/actions/stepActions";
 import { submitForm } from "../redux/actions/formActions";
+
+const validationSchema = Yup.object({
+  product: Yup.string().required("Select a product"),
+});
 
 export default function Form3() {
   const dispatch = useDispatch();
@@ -41,7 +46,6 @@ export default function Form3() {
   // moves user to previous form step
   const handleBack = () => {
     dispatch(decrementActiveStep());
-    console.log(activeStep);
   };
 
   // update redux store (active step + form details), move to next form
@@ -64,14 +68,6 @@ export default function Form3() {
     </div>
   );
 
-  const validate = (values) => {
-    const errors = {};
-    if (!values.product) {
-      errors.product = "Select a product.";
-    }
-    return errors;
-  };
-
   return (
     <FormComponent
       title="Product Selection"
@@ -79,7 +75,7 @@ export default function Form3() {
       handleSubmit={handleSubmit}
       handleBack={handleBack}
       activeStep={activeStep}
-      validate={validate}
+      validationSchema={validationSchema}
     >
       {radioGroup()}
     </FormComponent>

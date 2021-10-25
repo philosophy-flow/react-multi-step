@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import * as Yup from "yup";
 
 // components
 import FormComponent from "../components/FormComponent";
@@ -13,23 +14,13 @@ import {
 } from "../redux/actions/stepActions";
 import { submitForm } from "../redux/actions/formActions";
 
-const validate = (values) => {
-  const errors = {};
-  if (!values.address1) {
-    errors.address1 = "Required";
-  }
-
-  if (!values.city) {
-    errors.city = "Required";
-  }
-
-  if (!values.zipcode) {
-    errors.zipcode = "Required";
-  } else if (!/^[0-9]{5}(?:-[0-9]{4})?$/i.test(values.zipcode)) {
-    errors.zipcode = "Invalid zipcode";
-  }
-  return errors;
-};
+const validationSchema = Yup.object({
+  address1: Yup.string().required("Required"),
+  city: Yup.string().required("Required"),
+  zipcode: Yup.string()
+    .matches(/^[0-9]{5}(?:-[0-9]{4})?$/i, "Invalid zipcode")
+    .required("Required"),
+});
 
 export default function Form2() {
   const dispatch = useDispatch();
@@ -60,7 +51,6 @@ export default function Form2() {
   // moves user to previous form step
   const handleBack = () => {
     dispatch(decrementActiveStep());
-    console.log(activeStep);
   };
 
   // update redux store (active step + form details), move to next form
@@ -75,7 +65,7 @@ export default function Form2() {
       title="Address Details"
       initialValues={initialValues}
       handleSubmit={handleSubmit}
-      validate={validate}
+      validationSchema={validationSchema}
       handleBack={handleBack}
       activeStep={activeStep}
     >

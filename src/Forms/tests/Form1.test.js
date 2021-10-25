@@ -73,7 +73,7 @@ describe("form 1 validation", () => {
 
     let emailError;
     await waitFor(() => {
-      emailError = screen.getByText("Invalid email address");
+      emailError = screen.getByText("Invalid format");
     });
 
     expect(emailError).not.toBeNull();
