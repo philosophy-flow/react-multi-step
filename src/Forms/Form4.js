@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 import { decrementActiveStep } from "../redux/actions/stepActions";
 import { submitForm } from "../redux/actions/formActions";
 
-export default function Review() {
+export default function Form4() {
   const dispatch = useDispatch();
   const history = useHistory();
   const activeStep = useSelector((state) => state.activeStep).toString();
@@ -23,6 +23,7 @@ export default function Review() {
   // moves user to previous form step
   const handleBack = () => {
     dispatch(decrementActiveStep());
+    history.push("3");
   };
 
   const handleFinalSubmission = (e) => {

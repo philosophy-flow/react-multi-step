@@ -92,4 +92,14 @@ describe("form 2", () => {
       expect(history.push).toHaveBeenCalledWith("3");
     });
   });
+
+  test("previous subform appears when back button is clicked", async () => {
+    history.push = jest.fn();
+
+    userEvent.click(screen.getByText(/back/i));
+
+    await waitFor(() => {
+      expect(history.push).toHaveBeenCalledWith("1");
+    });
+  });
 });

@@ -46,6 +46,7 @@ export default function Form3() {
   // moves user to previous form step
   const handleBack = () => {
     dispatch(decrementActiveStep());
+    history.push("2");
   };
 
   // update redux store (active step + form details), move to next form

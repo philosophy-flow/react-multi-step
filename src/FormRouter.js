@@ -9,7 +9,7 @@ import {
 import Form1 from "./Forms/Form1";
 import Form2 from "./Forms/Form2";
 import Form3 from "./Forms/Form3";
-import Review from "./Forms/Review";
+import Form4 from "./Forms/Form4";
 
 export default function FormRouter() {
   return (
@@ -28,7 +28,7 @@ export default function FormRouter() {
           <Form3 />
         </Route>
         <Route path="/4">
-          <Review />
+          <Form4 />
         </Route>
         <Route>
           <Redirect to="/1" />
