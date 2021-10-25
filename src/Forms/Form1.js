@@ -1,6 +1,6 @@
 import "./Form.css";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -35,21 +35,25 @@ const validate = (values) => {
   return errors;
 };
 
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-};
-
 export default function Form1() {
   const dispatch = useDispatch();
   const history = useHistory();
-
-  // keep user on active form step
   const activeStep = useSelector((state) => state.activeStep).toString();
-  useEffect(() => {
-    history.push(activeStep);
-  }, [activeStep, history]);
+
+  // see if form has been visited; if so, add values to form
+  const formComplete = useSelector((state) => state.subForm1.complete);
+  const formValues = useSelector((state) => state.subForm1.data);
+
+  let initialValues;
+  if (formComplete) {
+    initialValues = formValues;
+  } else {
+    initialValues = {
+      firstName: "",
+      lastName: "",
+      email: "",
+    };
+  }
 
   // update redux store (active step + form details), move to next form
   const handleSubmit = (values) => {
@@ -64,6 +68,7 @@ export default function Form1() {
       initialValues={initialValues}
       handleSubmit={handleSubmit}
       validate={validate}
+      activeStep={activeStep}
     >
       <Input label="First Name" name="firstName" />
       <Input label="Last Name" name="lastName" />

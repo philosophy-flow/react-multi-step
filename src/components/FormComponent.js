@@ -5,6 +5,8 @@ function FormComponent(props) {
   const {
     title = "",
     initialValues = {},
+    handleBack,
+    activeStep,
     handleSubmit,
     validate = null,
     children,
@@ -14,11 +16,17 @@ function FormComponent(props) {
     <Formik
       initialValues={initialValues}
       validate={validate}
+      handleBack={handleBack}
       onSubmit={handleSubmit}
     >
       <Form className="Form">
         <h3>{title}</h3>
         {children}
+        {activeStep !== "1" && (
+          <button type="button" className="form-btn" onClick={handleBack}>
+            Back
+          </button>
+        )}
         <button type="submit" className="form-btn">
           Next
         </button>

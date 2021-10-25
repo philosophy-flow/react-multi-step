@@ -2,22 +2,29 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 
+import { decrementActiveStep } from "../redux/actions/stepActions";
 import { submitForm } from "../redux/actions/formActions";
 
 export default function Review() {
-  const history = useHistory();
   const dispatch = useDispatch();
-
-  // keep user on active form step
+  const history = useHistory();
   const activeStep = useSelector((state) => state.activeStep).toString();
+
+  // move user to beginning of form on page refresh
   useEffect(() => {
     history.push(activeStep);
-  });
+  }, [activeStep, history]);
 
   // bring in data from sub forms
   const form1Data = useSelector((state) => state.subForm1.data);
   const form2Data = useSelector((state) => state.subForm2.data);
   const form3Data = useSelector((state) => state.subForm3.data);
+
+  // moves user to previous form step
+  const handleBack = () => {
+    dispatch(decrementActiveStep());
+    console.log(activeStep);
+  };
 
   const handleFinalSubmission = (e) => {
     e.preventDefault();
@@ -67,6 +74,9 @@ export default function Review() {
           Product Selection: <span>{form3Data.product}</span>
         </p>
       </div>
+      <button className="form-btn" type="button" onClick={handleBack}>
+        Back
+      </button>
       <button className="form-btn" type="submit">
         Submit Form
       </button>
