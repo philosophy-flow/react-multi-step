@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { ErrorMessage } from "formik";
 
 // components
 import FormComponent from "../components/FormComponent";
@@ -45,18 +46,31 @@ export default function Form3() {
 
   // update redux store (active step + form details), move to next form
   const handleSubmit = (values) => {
-    if (values.product) {
-      dispatch(incrementActiveStep());
-      dispatch(submitForm("form3", values));
-      history.push("4");
-    }
+    dispatch(incrementActiveStep());
+    dispatch(submitForm("form3", values));
+    history.push("4");
   };
 
-  // create array of radio inputs
+  // create a radio group
   const products = useSelector((state) => state.products);
-  const productInputs = products.map((product) => (
-    <RadioInput key={product.id} name="product" value={product.title} />
-  ));
+  const radioGroup = () => (
+    <div style={{ marginBottom: "1rem" }}>
+      {products.map((product) => (
+        <RadioInput key={product.id} name="product" value={product.title} />
+      ))}
+      <ErrorMessage name="product">
+        {(msg) => <span className="form-error">{msg}</span>}
+      </ErrorMessage>
+    </div>
+  );
+
+  const validate = (values) => {
+    const errors = {};
+    if (!values.product) {
+      errors.product = "Select a product.";
+    }
+    return errors;
+  };
 
   return (
     <FormComponent
@@ -65,8 +79,9 @@ export default function Form3() {
       handleSubmit={handleSubmit}
       handleBack={handleBack}
       activeStep={activeStep}
+      validate={validate}
     >
-      {productInputs}
+      {radioGroup()}
     </FormComponent>
   );
 }
